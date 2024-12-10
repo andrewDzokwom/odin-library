@@ -1,5 +1,19 @@
-form {
+/* form {
     border: solid greenyellow 1px;
     padding: 10px;
     display: inline-block;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.container > div {
+    padding: 10px;
+} */
+
+.add {
+    text-align: center;
 }
