@@ -1,10 +1,11 @@
 const libraryTag = document.querySelector(".container")
 const form = document.querySelector("form");
+const container = document.querySelector(".container");
 
 
 
 // array of books
-const books = [
+let books = [
   {
     id: "1",
     title: "To Kill a Mockingbird",
@@ -49,19 +50,25 @@ class Book {
     this.author = author;
     this.pages = pages;
     this.hasRead = read;
-    this.id = String(Math.floor(Math.random() * 1000));
+    this.id = String(books.length + 1);
   }
 }
 // first rendering 
 document.addEventListener("DOMContentLoaded", ()=>{
   renderBooks(books);
-  document.querySelectorAll(".delete").forEach(btn =>{
-    btn.addEventListener("click", ()=>{
-      console.log(btn.dataset.id);
-      
-    })
-  })
 })
+
+container.addEventListener("click", (e)=>{
+  if(e.target.classList.contains("delete")){
+    const id = e.target.dataset.id;
+    console.log(id);
+    books = books.filter(book => book.id !== id);
+    renderBooks(books);
+  }
+  console.log('target id', e.target.dataset.id);
+  
+})
+
 
 
 const handleSubmitEvent =  (e)=>{
@@ -119,46 +126,17 @@ const toggleAdd = document.querySelector(".toggle-add")
 toggleAdd.addEventListener("click", ()=>{
   form.style.display = form.style.display === "none" ? "block" : "none"
 
-})
+});
+
+
+const divs =[...document.querySelectorAll(".container > div")];
+console.log(divs);
 
 
 
-
-
-
-        
-// function displayBook(book){
-//     // create div for  each book 
-//     const bookCard = document.createElement("div")
-//     // create innerHTML for each book 
-//     const text = `
-//         <span class="book-title">${book.title}</span> <br> Author name: <span class="author-name">${book.author}</span> <br> Number of pages: <span class="pages">${book.pages}</span><br>
-//         ${book.read? "Has read already" : "Haven't read"} <br> <button onclick="handleRead()">${book.read? "Mark not read" : "Mark read"}</button><button class="delete-book" data-id=${book.id} onclick="removeBook()">Remove</button>
-//     `
-//     bookCard.innerHTML = text;
-//     libraryTag.appendChild(bookCard)
-// }
-
-
-// function removeBook(){
-//     console.log('removeBook clicked');
+  const testTag = document.querySelector(".test");
+  testTag.addEventListener("click", (e)=>{
+    console.log("test");
+    console.log(e.target);
     
-// }
-
-// const deleteBtns = document.querySelectorAll(".delete-book")
-
-// deleteBtns.forEach(btn => {
-//     btn.addEventListener("click", ()=>{
-//         console.log(btn.dataset.id);
-        
-//     })
-// })
-
-
-
-
-
-
-
-
-  // books.forEach(displayBook )
+  })
