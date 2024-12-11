@@ -12,16 +12,16 @@
     <div class="search-div">🔍Search title or author name <input type="search" name="search" id="search" placeholder="🔍"></div>
     <div class="container"> </div>
     
-    <div class="alert"></div>
+    
 
     <dialog close id="show-form">
-
+        <div class="alert"></div>
         <div class="add-book">
             <button class="close-form">X</button>
             <form action="">
                 <div>
                     <label for="title">Title <span class="required">*</span><br>
-                        <input type="text" id="title" name="title" placeholder="The Mask">
+                        <input type="text" id="title" name="title" placeholder="The Mask" autofocus>
                     </label>
                 </div>
                 <div>
@@ -39,11 +39,11 @@
                         <input type="checkbox" id="read" name="read"> Read
                     </label>
                 </div>
-                <div><input type="submit" value="Add book"></div>
+                <div><input type="submit" value="Add book" id="submit"></div>
             </form>
         </div>
     </dialog>
-    <footer>built by <a href="githublink">Andrew Dzokwom</a> source code <a href="codelink">available here</a></footer>
+    <footer>Built with 𖹭 by <a href="githublink">Andrew Dzokwom</a> source code available <a href="codelink">here</a></footer>
     <script src="./main.js"></script>
 </body>
 </html>

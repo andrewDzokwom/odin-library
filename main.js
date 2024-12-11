@@ -2,6 +2,7 @@ const libraryTag = document.querySelector(".container")
 const form = document.querySelector("form");
 const container = document.querySelector(".container");
 const formCloseTag = document.querySelector(".close-form")
+const alertTag = document.querySelector(".alert")
 let books = [];
 class Book {
   constructor(title, author, pages, read){
@@ -68,33 +69,51 @@ const handleSubmitEvent =  (e)=>{
   const bookAuthor = document.querySelector("#author").value;
   const bookPages = document.querySelector("#pages").value;
   const bookRead = document.querySelector("#read").checked;
-
-  //check for existence of book title and author in books array
-  const bookExists = books.find(book => book.title === bookTitle && book.author === bookAuthor);
-  if(bookExists){
-    document.querySelector(".alert").textContent = "Book already exists";
+  if (bookTitle.length < 4){
+    alertTag.textContent = 'book name must be at least 4 letters'
     setTimeout(()=>{
-      document.querySelector(".alert").textContent = "";
-      document.querySelector("form").reset();
-    }, 3000)
-    return;
-  }
+      alertTag.textContent = ""
+    }, 5000)
+  }else if(bookAuthor.length < 4){
+    alertTag.textContent = 'Author name must be at least 4 letters'
+    setTimeout(()=>{
+      alertTag.textContent = ""
+    }, 5000)
+  }else if(Number(bookPages)<20){
+    alertTag.textContent = 'anything less than 20 pages is not considered as a book (on this website)'
+    setTimeout(()=>{
+      alertTag.textContent = ""
+    }, 5000)
+  }else{
 
-  //create book and add to books
-  const newBook = new Book(bookTitle, bookAuthor, bookPages, bookRead);
-  books.push(newBook);
-  console.log(books);
-  //render books
-  renderBooks(books);
-  //clear form
-  document.querySelector("form").reset();
-  document.querySelector("#show-form").close()
+    //check for existence of book title and author in books array
+    const bookExists = books.find(book => book.title === bookTitle && book.author === bookAuthor);
+    if(bookExists){
+      document.querySelector(".alert").textContent = "Book already exists";
+      setTimeout(()=>{
+        document.querySelector(".alert").textContent = "";
+        document.querySelector("form").reset();
+      }, 5000)
+      return;
+    }
+  
+    //create book and add to books
+    const newBook = new Book(bookTitle, bookAuthor, bookPages, bookRead);
+    books.push(newBook);
+    console.log(books);
+    //render books
+    renderBooks(books);
+    //clear form
+    document.querySelector("form").reset();
+    document.querySelector("#show-form").close()
+  }
 
 }
 // form submit
 form.addEventListener("submit", handleSubmitEvent)
 
 formCloseTag.addEventListener("click", ()=>{
+  document.querySelector("form").reset();
   document.querySelector("#show-form").close()
 })
 
@@ -110,7 +129,7 @@ function renderBooks(books){
     const text = `
     <span class="book-title">${book.title}</span> <br> 
     by <span class="author-name">${book.author}</span> <br> 
-     <span class="pages">${book.pages}</span> pages<br>
+     <span class="pages">🗐 ${book.pages}</span> pages<br>
     <div>${book.hasRead? "✅ Read already":"⭕ Did'nt read"}</div>
     <button data-id=${book.id} class="delete"> delete</button> 
     <button class="read-btn" data-id=${book.id} > ${book.hasRead? "mark unread":"mark read"}</button>`

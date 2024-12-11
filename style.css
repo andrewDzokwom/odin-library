@@ -7,9 +7,13 @@ h1 {
     font-size: 64px;
 }
 
+button:hover {
+    cursor: pointer;
+}
+
 .toggle-add {
     padding: 10px 25px;
-    border: dashed seagreen 2px;
+    border: dashed rgb(176, 227, 202) 2px;
     border-radius: 10px;
     font-weight: bold;
 }
@@ -20,8 +24,15 @@ h1 {
     font-style: italic;
 }
 
-#seaarch[input]{
-    background-color: skyblue;
+#search{
+    background-color: rgb(176, 227, 202);
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#search:focus{
+    background-color: antiquewhite;
 }
 
 .container > div {
@@ -91,6 +102,12 @@ h1 {
     top: 20vh;
     width: 40vw;
     background-color:  rgb(176, 227, 202);
+}
+
+#submit {
+    padding: 5px 15px;
+    border-radius: 5px;
+    font-weight: bold;
 }
 
 .close-form {
