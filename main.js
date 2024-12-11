@@ -1,6 +1,7 @@
 const libraryTag = document.querySelector(".container")
 const form = document.querySelector("form");
 const container = document.querySelector(".container");
+const formCloseTag = document.querySelector(".close-form")
 let books = [];
 class Book {
   constructor(title, author, pages, read){
@@ -15,16 +16,16 @@ class Book {
   }
 }
 
-[
-  new Book("The Great Gatsby", "F. Scott Fitzgerald", 180, false),
-  new Book("To Kill a Mockingbird", "Harper Lee", 281, true),
-  new Book("1984", "George Orwell", 328, false),
-  new Book("Pride and Prejudice", "Jane Austen", 272, true),
-  new Book("The Catcher in the Rye", "J.D. Salinger", 234, false),
-  new Book("The Hobbit", "J.R.R. Tolkien", 310, false),
-  new Book("The Lord of the Rings", "J.R.R. Tolkien", 1216, false),
-  new Book("The Hitchhiker's Guide to the Galaxy", "Douglas Adams", 320, false)
-].forEach(book => books.push(book))
+books.push(new Book("The Great Gatsby", "F. Scott Fitzgerald", 180, false))
+books.push(new Book("To Kill a Mockingbird", "Harper Lee", 281, true))
+books.push(new Book("1984", "George Orwell", 328, false))
+books.push(new Book("Pride and Prejudice", "Jane Austen", 272, true))
+books.push( new Book("The Catcher in the Rye", "J.D. Salinger", 234, false))
+books.push(new Book("The Hobbit", "J.R.R. Tolkien", 310, false))
+books.push(new Book("The Lord of the Rings", "J.R.R. Tolkien", 1216, false))
+books.push(new Book("The Hitchhiker's Guide to the Galaxy", "Douglas Adams", 320, false))
+
+console.log({books})
 
 
 
@@ -33,25 +34,28 @@ document.addEventListener("DOMContentLoaded", ()=>{
   renderBooks(books);
 })
 
+
 libraryTag.addEventListener("click", (e)=>{
+  let updatedBooks ;
   if(e.target.classList.contains("delete")){
     const id = e.target.dataset.id;
-    console.log(id);
+    console.log({id});
     books = books.filter(book => book.id !== id);
     renderBooks(books);
   }else if(e.target.classList.contains("read-btn")){
+
     const itemId = e.target.dataset.id
-    const readBtns = document.querySelectorAll(".read-btn")
-    console.log('btns', readBtns);
-    
-    console.log('target id', e.target.dataset.id);
     const targetedBook = books.find(book=> book.id === itemId)
     console.log(targetedBook);
     targetedBook.switchRead()
-    books[itemId] = targetedBook
+    // books[itemId-1] = targetedBook
+    books.forEach(book =>{
+      if (book.id === itemId){
+        book = targetedBook
+      }
+    })
+    renderBooks(books)
   }
-
-  
 })
 
 
@@ -71,6 +75,7 @@ const handleSubmitEvent =  (e)=>{
     document.querySelector(".alert").textContent = "Book already exists";
     setTimeout(()=>{
       document.querySelector(".alert").textContent = "";
+      document.querySelector("form").reset();
     }, 3000)
     return;
   }
@@ -83,11 +88,15 @@ const handleSubmitEvent =  (e)=>{
   renderBooks(books);
   //clear form
   document.querySelector("form").reset();
+  document.querySelector("#show-form").close()
 
 }
 // form submit
 form.addEventListener("submit", handleSubmitEvent)
-console.log('books', books);
+
+formCloseTag.addEventListener("click", ()=>{
+  document.querySelector("#show-form").close()
+})
 
 
 
@@ -97,10 +106,12 @@ function renderBooks(books){
   books.forEach(book => {
     console.log(book, book.hasRead);
     const bookCard = document.createElement("div");
+    bookCard.className = "book-card"
     const text = `
     <span class="book-title">${book.title}</span> <br> 
-    Author name: <span class="author-name">${book.author}</span> <br> 
-    Number of pages: <span class="pages">${book.pages}</span><br>
+    by <span class="author-name">${book.author}</span> <br> 
+     <span class="pages">${book.pages}</span> pages<br>
+    <div>${book.hasRead? "✅ Read already":"⭕ Did'nt read"}</div>
     <button data-id=${book.id} class="delete"> delete</button> 
     <button class="read-btn" data-id=${book.id} > ${book.hasRead? "mark unread":"mark read"}</button>`
     bookCard.innerHTML = text;
@@ -110,21 +121,18 @@ function renderBooks(books){
 
 }
 
-
-
 const toggleAdd = document.querySelector(".toggle-add")
 toggleAdd.addEventListener("click", ()=>{
-  form.style.display = form.style.display === "none" ? "block" : "none"
+  document.querySelector("#show-form").show()
 
 });
-
 
 
 //search handler
 const searchInput = document.querySelector("#search");
 searchInput.addEventListener("input", (e)=>{
   const searchValue = e.target.value;
-  const filteredBooks = books.filter(book => book.title.toLowerCase().includes(searchValue.toLowerCase()));
+  const filteredBooks = books.filter(book => book.title.toLowerCase().includes(searchValue.toLowerCase()) || book.author.toLowerCase().includes(searchValue.toLowerCase()));
   renderBooks(filteredBooks);
 })
 

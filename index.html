@@ -7,38 +7,43 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>📚Odin Library ❌</h1>
+    <h1>📚Odin Library </h1>
     <div class="add"><button class="toggle-add">Add book</button></div>
-    <div>🔍Search title<input type="search" name="search" id="search" placeholder="🔍"></div>
+    <div class="search-div">🔍Search title or author name <input type="search" name="search" id="search" placeholder="🔍"></div>
     <div class="container"> </div>
     
     <div class="alert"></div>
-    <div class="add-book">
-        <form action="">
-            <h3>Book Form</h3>
-            <div>
-                <label for="title">Title <br>
-                    <input type="text" id="title" name="title" placeholder="The Mask">
-                </label>
-            </div>
-            <div>
-                <label for="author">Author <br>
-                    <input type="text" id="author" name="author" placeholder="John Woo">
-                </label>
-            </div>
-            <div>
-                <label for="pages">Number of pages <br>
-                    <input type="number" id="pages" name="pages" >
-                </label>
-            </div>
-            <div>
-                <label for="read">
-                    <input type="checkbox" id="read" name="read"> Read
-                </label>
-            </div>
-            <div><input type="submit" value="Add book"></div>
-        </form>
-    </div>
+
+    <dialog close id="show-form">
+
+        <div class="add-book">
+            <button class="close-form">X</button>
+            <form action="">
+                <div>
+                    <label for="title">Title <span class="required">*</span><br>
+                        <input type="text" id="title" name="title" placeholder="The Mask">
+                    </label>
+                </div>
+                <div>
+                    <label for="author">Author <span class="required">*</span><br>
+                        <input type="text" id="author" name="author" placeholder="John Woo">
+                    </label>
+                </div>
+                <div>
+                    <label for="pages">Number of pages <span class="required">*</span><br>
+                        <input type="number" id="pages" name="pages" >
+                    </label>
+                </div>
+                <div>
+                    <label for="read">
+                        <input type="checkbox" id="read" name="read"> Read
+                    </label>
+                </div>
+                <div><input type="submit" value="Add book"></div>
+            </form>
+        </div>
+    </dialog>
+    <footer>built by <a href="githublink">Andrew Dzokwom</a> source code <a href="codelink">available here</a></footer>
     <script src="./main.js"></script>
 </body>
 </html>
