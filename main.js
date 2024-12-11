@@ -1,49 +1,7 @@
 const libraryTag = document.querySelector(".container")
 const form = document.querySelector("form");
 const container = document.querySelector(".container");
-
-
-
-// array of books
-let books = [
-  {
-    id: "1",
-    title: "To Kill a Mockingbird",
-    author: "Harper Lee",
-    pages: 281,
-    hasRead: true
-  },
-  {
-    id: "2",
-    title: "1984",
-    author: "George Orwell",
-    pages: 328,
-    hasRead: false
-  },
-  {
-    id: "3",
-    title: "Pride and Prejudice",
-    author: "Jane Austen",
-    pages: 272,
-    hasRead: true
-  },
-  {
-    id: "4",
-    title: "The Great Gatsby",
-    author: "F. Scott Fitzgerald",
-    pages: 180,
-    hasRead: false
-  },
-  {
-    id: "5",
-    title: "The Catcher in the Rye",
-    author: "J.D. Salinger",
-    pages: 272,
-    hasRead: true
-  }
-];
-
-
+let books = [];
 class Book {
   constructor(title, author, pages, read){
     this.title = title;
@@ -51,21 +9,91 @@ class Book {
     this.pages = pages;
     this.hasRead = read;
     this.id = String(books.length + 1);
+  };
+  switchRead(){
+    this.hasRead = !this.hasRead
   }
 }
+
+[
+ new Book("The Great Gatsby", "F. Scott Fitzgerald", 180, false),
+  new Book("To Kill a Mockingbird", "Harper Lee", 281, false),
+  new Book("1984", "George Orwell", 328, false),
+  new Book("Pride and Prejudice", "Jane Austen", 272, false),
+  new Book("The Catcher in the Rye", "J.D. Salinger", 234, false),
+  new Book("The Hobbit", "J.R.R. Tolkien", 310, false),
+  new Book("The Lord of the Rings", "J.R.R. Tolkien", 1216, false),
+  new Book("The Hitchhiker's Guide to the Galaxy", "Douglas Adams", 320, false)
+].forEach(book => books.push(book))
+
+
+// array of books
+// let books = [
+//   {
+//     id: "1",
+//     title: "To Kill a Mockingbird",
+//     author: "Harper Lee",
+//     pages: 281,
+//     hasRead: true
+//   },
+//   {
+//     id: "2",
+//     title: "1984",
+//     author: "George Orwell",
+//     pages: 328,
+//     hasRead: false
+//   },
+//   {
+//     id: "3",
+//     title: "Pride and Prejudice",
+//     author: "Jane Austen",
+//     pages: 272,
+//     hasRead: true
+//   },
+//   {
+//     id: "4",
+//     title: "The Great Gatsby",
+//     author: "F. Scott Fitzgerald",
+//     pages: 180,
+//     hasRead: false
+//   },
+//   {
+//     id: "5",
+//     title: "The Catcher in the Rye",
+//     author: "J.D. Salinger",
+//     pages: 272,
+//     hasRead: true
+//   }
+// ];
+
+
+
+
+
+
 // first rendering 
 document.addEventListener("DOMContentLoaded", ()=>{
   renderBooks(books);
 })
 
-container.addEventListener("click", (e)=>{
+libraryTag.addEventListener("click", (e)=>{
   if(e.target.classList.contains("delete")){
     const id = e.target.dataset.id;
     console.log(id);
     books = books.filter(book => book.id !== id);
     renderBooks(books);
+  }else if(e.target.classList.contains("read-btn")){
+    const itemId = e.target.dataset.id
+    const readBtns = document.querySelectorAll(".read-btn")
+    console.log('btns', readBtns);
+    
+    console.log('target id', e.target.dataset.id);
+    const targetedBook = books.find(book=> book.id === itemId)
+    console.log(targetedBook);
+    targetedBook.switchRead()
+    books[itemId] = targetedBook
   }
-  console.log('target id', e.target.dataset.id);
+
   
 })
 
@@ -112,7 +140,7 @@ function renderBooks(books){
     <span class="book-title">${book.title}</span> <br> 
     Author name: <span class="author-name">${book.author}</span> <br> 
     Number of pages: <span class="pages">${book.pages}</span><br>
-    <button data-id=${book.id} class="delete"> delete</button>`
+    <button data-id=${book.id} class="delete"> delete</button> <button class="read-btn" data-id=${book.id}>${book.isRead? "mark unread": "mark read"}</button>`
     bookCard.innerHTML = text;
     libraryTag.appendChild(bookCard)
   })
@@ -129,14 +157,13 @@ toggleAdd.addEventListener("click", ()=>{
 });
 
 
-const divs =[...document.querySelectorAll(".container > div")];
-console.log(divs);
+// const divs =[...document.querySelectorAll(".container > div")];
 
 
+const testTag = document.querySelector(".test");
+testTag.addEventListener("click", (e)=>{
+  console.log("test");
+  console.log(e.target);
+  
+})
 
-  const testTag = document.querySelector(".test");
-  testTag.addEventListener("click", (e)=>{
-    console.log("test");
-    console.log(e.target);
-    
-  })
