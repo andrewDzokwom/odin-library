@@ -16,58 +16,15 @@ class Book {
 }
 
 [
- new Book("The Great Gatsby", "F. Scott Fitzgerald", 180, false),
-  new Book("To Kill a Mockingbird", "Harper Lee", 281, false),
+  new Book("The Great Gatsby", "F. Scott Fitzgerald", 180, false),
+  new Book("To Kill a Mockingbird", "Harper Lee", 281, true),
   new Book("1984", "George Orwell", 328, false),
-  new Book("Pride and Prejudice", "Jane Austen", 272, false),
+  new Book("Pride and Prejudice", "Jane Austen", 272, true),
   new Book("The Catcher in the Rye", "J.D. Salinger", 234, false),
   new Book("The Hobbit", "J.R.R. Tolkien", 310, false),
   new Book("The Lord of the Rings", "J.R.R. Tolkien", 1216, false),
   new Book("The Hitchhiker's Guide to the Galaxy", "Douglas Adams", 320, false)
 ].forEach(book => books.push(book))
-
-
-// array of books
-// let books = [
-//   {
-//     id: "1",
-//     title: "To Kill a Mockingbird",
-//     author: "Harper Lee",
-//     pages: 281,
-//     hasRead: true
-//   },
-//   {
-//     id: "2",
-//     title: "1984",
-//     author: "George Orwell",
-//     pages: 328,
-//     hasRead: false
-//   },
-//   {
-//     id: "3",
-//     title: "Pride and Prejudice",
-//     author: "Jane Austen",
-//     pages: 272,
-//     hasRead: true
-//   },
-//   {
-//     id: "4",
-//     title: "The Great Gatsby",
-//     author: "F. Scott Fitzgerald",
-//     pages: 180,
-//     hasRead: false
-//   },
-//   {
-//     id: "5",
-//     title: "The Catcher in the Rye",
-//     author: "J.D. Salinger",
-//     pages: 272,
-//     hasRead: true
-//   }
-// ];
-
-
-
 
 
 
@@ -111,7 +68,10 @@ const handleSubmitEvent =  (e)=>{
   //check for existence of book title and author in books array
   const bookExists = books.find(book => book.title === bookTitle && book.author === bookAuthor);
   if(bookExists){
-    alert("Book already exists");
+    document.querySelector(".alert").textContent = "Book already exists";
+    setTimeout(()=>{
+      document.querySelector(".alert").textContent = "";
+    }, 3000)
     return;
   }
 
@@ -135,12 +95,14 @@ console.log('books', books);
 function renderBooks(books){
   libraryTag.innerHTML = "";  
   books.forEach(book => {
+    console.log(book, book.hasRead);
     const bookCard = document.createElement("div");
     const text = `
     <span class="book-title">${book.title}</span> <br> 
     Author name: <span class="author-name">${book.author}</span> <br> 
     Number of pages: <span class="pages">${book.pages}</span><br>
-    <button data-id=${book.id} class="delete"> delete</button> <button class="read-btn" data-id=${book.id}>${book.isRead? "mark unread": "mark read"}</button>`
+    <button data-id=${book.id} class="delete"> delete</button> 
+    <button class="read-btn" data-id=${book.id} > ${book.hasRead? "mark unread":"mark read"}</button>`
     bookCard.innerHTML = text;
     libraryTag.appendChild(bookCard)
   })
@@ -157,13 +119,12 @@ toggleAdd.addEventListener("click", ()=>{
 });
 
 
-// const divs =[...document.querySelectorAll(".container > div")];
 
-
-const testTag = document.querySelector(".test");
-testTag.addEventListener("click", (e)=>{
-  console.log("test");
-  console.log(e.target);
-  
+//search handler
+const searchInput = document.querySelector("#search");
+searchInput.addEventListener("input", (e)=>{
+  const searchValue = e.target.value;
+  const filteredBooks = books.filter(book => book.title.toLowerCase().includes(searchValue.toLowerCase()));
+  renderBooks(filteredBooks);
 })
 
