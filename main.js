@@ -26,8 +26,6 @@ books.push(new Book("The Hobbit", "J.R.R. Tolkien", 310, false))
 books.push(new Book("The Lord of the Rings", "J.R.R. Tolkien", 1216, false))
 books.push(new Book("The Hitchhiker's Guide to the Galaxy", "Douglas Adams", 320, false))
 
-console.log({books})
-
 
 
 // first rendering 
@@ -37,19 +35,23 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
 
 libraryTag.addEventListener("click", (e)=>{
-  let updatedBooks ;
   if(e.target.classList.contains("delete")){
     const id = e.target.dataset.id;
-    console.log({id});
-    books = books.filter(book => book.id !== id);
-    renderBooks(books);
+    let bookToDelete;
+    [bookToDelete] = books.filter(book => book.id === id)
+    console.log('book to delete ', bookToDelete.title);
+    
+    if(window.confirm(`Do you want to delete "${bookToDelete.title}" by ${bookToDelete.author}?`)){
+
+      console.log({id});
+      books = books.filter(book => book.id !== id);
+      renderBooks(books);
+    }
   }else if(e.target.classList.contains("read-btn")){
 
     const itemId = e.target.dataset.id
     const targetedBook = books.find(book=> book.id === itemId)
-    console.log(targetedBook);
     targetedBook.switchRead()
-    // books[itemId-1] = targetedBook
     books.forEach(book =>{
       if (book.id === itemId){
         book = targetedBook
