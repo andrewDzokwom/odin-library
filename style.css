@@ -40,6 +40,7 @@ button:hover {
     background-color: white;
 }
 
+
 .container {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -53,6 +54,10 @@ button:hover {
 .book-card {
     border: 2px black solid;
     border-radius: 0px 15px;
+}
+
+.book-card:hover{
+    box-shadow: 10px 10px 5px 0 rgba(0, 0, 0, 0.2);
 }
 
 .book-title{
@@ -83,6 +88,11 @@ button:hover {
     margin-top: 10px;
     font-weight: bold;
 }
+
+button:hover{
+    box-shadow: 0.5em 0.5em 0.5em 0 rgba(0, 0, 0, 0.2);
+}
+
 .read-btn {
     background-color: rgb(176, 227, 202);
 }
